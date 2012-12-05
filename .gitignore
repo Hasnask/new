@@ -4,3 +4,71 @@
 *.jar
 *.war
 *.ear
+package Com.reservation;
+import java.util.HashSet;
+
+import Com.logement.*;
+
+public class GestionLocation {
+  /*si  Logement ou Reservation sont  une collection 
+	 * on doit pas accepter les doublons car ou peut avoir un logement qui est en meme temps reserve et pas reserver
+	 * utiliser Hashset
+	 * */
+	//private HashSet<Logement> logement = new HashSet<Logement> ();
+	private Logement logements[]=new Logement[20];
+	private  Reservation[] reservations=new Reservation[50];
+	int compteurReserv=0;
+	GestionLocation(){
+		//remplir logement
+		int i;
+		for(i=0;i<=3;i++){
+			logements[i]=new appartements("Marrakech"+i,500,false,2);
+			//logements.add(new appartements("Marrakech"+i,500,false,2));
+
+		}
+		
+		for(i=0;i<=3;i++){
+			logements[i]=new bungalows("Marrakech"+i,1500,true,false);
+		}	
+	}
+	
+	/*reserver (Logement l, int n) qui consiste à réserver soit un appartement soit un
+bungalow durant un nombre de jours. Cette opération renvoie un entier qui correspond
+au numéro de réservation (auto-incrément) si celle-ci peut être effectuée, ou –1
+sinon.*/
+	public int nombreReservationInserer(){
+		//return reservation.size();
+		int i=0;
+		while(reservations[i] != null){
+			i++;
+		}
+		return i;
+	}
+	
+	public int reserver (Logement l, int n){
+		if(l.isReverve()){
+			return -1;
+		}else{
+			reservations[nombreReservationInserer()]= new Reservation(nombreReservationInserer()+1, n ,1);
+			l.setReverve(true);
+			return nombreReservationInserer()+1;
+		}		
+		
+	}
+	
+	public String lister(int num){
+		if((nombreReservationInserer() >= num) && (0<num))
+		return reservations[num-1].toString();
+		//if((nombreReservationInserer() >= num) && (0<num))
+		//Iterator i = reservation.Iterator();
+		//int j=1;
+		//while((i.hasNext()) && (j<num)) {
+		//i.next();
+		//j++;}
+		//return(i.hasNext())toString();
+		// return ((Reservation) (i.next()).toString());
+
+		else 
+			return null;
+	}
+}
